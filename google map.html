@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<meta name="description"
+	content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
+<meta name="keywords"
+	content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
+<meta name="author" content="PIXINVENT">
+<title>Colony: The Admin-panel:CExpress by Sweet iTech</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+<link rel="shortcut icon" type="image/x-icon"
+	th:href="@{/app-assets/images/logo.png}">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
+	rel="stylesheet">
+<link
+	href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
+	rel="stylesheet">
+<!-- BEGIN VENDOR CSS-->
+
+<!-- <link
+	th:href="@{/app-assets/dropify/dist/css/dropify.min.css}"
+	rel="stylesheet" type="text/css" /> -->
+
+<!-- jQuery library -->
+
+<!-- END Page Level CSS-->
+<!-- BEGIN Custom CSS-->
+<!-- BEGIN Page Level CSS-->
+<!-- END Page Level CSS-->
+</head>
+<body
+	class="vertical-layout vertical-menu-modern 2-columns   menu-expanded fixed-navbar"
+	data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+	<!-- fixed-top-->
+	<!-- Top Menu Items -->
+	<div th:replace="fragments/header :: header"></div>
+	<!-- /Top Menu Items -->
+	<!-- Left Sidebar Menu -->
+	<div th:replace="fragments/leftsidebar :: leftsidebar"></div>
+	<!-- /Left Sidebar Menu -->
+	<!-- ////////////////////////////////////////////////////////////////////////////-->
+	<div class="app-content content">
+		<div class="content-wrapper">
+			<div class="content-header row">
+				<div class="content-header-left col-md-6 col-12 mb-2">
+					<h3 class="content-header-title mb-0 d-inline-block">Assign
+						Order</h3>
+
+				</div>
+				<div class="content-header-right col-md-6 col-12"></div>
+			</div>
+			<div class="content-body">
+				<!-- Revenue, Hit Rate & Deals -->
+
+				<!-- below anchor tag is	for scrolling only -->
+				<a href="javascript:" id="return-to-top"><i
+					class="icon-chevron-up"></i></a>
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Order Information</h4>
+							</div>
+							<div class="card-block">
+								<div class="card-body">
+
+									
+									<div class="row">
+										<div class="col-md-12">
+										<div style="border: 2px solid; margin-top: 10px;margin-bottom: 10px;">
+										<div class="form-group">
+
+													<div id="map" style="height: 500px; "></div>
+
+												</div>
+										</div>
+										</div>
+									</div>	
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+
+
+
+				</div>
+
+
+
+
+
+			</div>
+		</div>
+	</div>
+	<!-- ////////////////////////////////////////////////////////////////////////////-->
+	<footer
+		class="footer footer-static footer-light navbar-border navbar-shadow">
+
+	</footer>
+	<!-- BEGIN VENDOR JS-->
+
+
+
+	<!-- Key for google map api-->
+<script
+		src="//maps.googleapis.com/maps/api/js?key=AIzaSyDcyuPYvqoowIYcWH5_jrWPnZzu2dobhoc&libraries=places"
+		type="text/javascript"></script> <!-- Key for google map api-->
+	<script
+		th:src="@{/app-assets/js/core/libraries/jquery_ui/jquery-ui.min.js}"
+		type="text/javascript"></script>
+	
+
+	<!-- END PAGE LEVEL JS-->
+</body>
+<style>
+.my_text {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	color: #202020;
+}
+
+legend {
+	display: block;
+	padding-left: 2px;
+	padding-right: 2px;
+	border: none;
+	color: #000066;
+}
+</style>
+
+<script th:inline="javascript">
+var pickuplat=[[${order.pickupLatitude}]];//23.0444444
+var pickuplong=[[${order.pickupLongitude}]];//72.99999
+
+var pickLatLng = {lat: pickuplat, lng: pickuplong};
+
+var recievelat=[[${order.receiverLatitude}]];
+var recievelong=[[${order.receiverLongitude}]];
+
+var recieveLatLng = {lat: recievelat, lng: recievelong}
+	
+var map = new google.maps.Map(document.getElementById('map'), {
+    center:pickLatLng,
+    zoom: 13,
+   
+  });
+
+
+
+
+var marker = new google.maps.Marker({
+    position: pickLatLng,
+    map: map,
+    title: 'Pick up address'
+  });
+var marker2 = new google.maps.Marker({
+    position: recieveLatLng,
+    map: map,
+    title: 'Delivery address'
+  });
+  
+  
+  
+  
+  var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  
+  directionsService.route({
+      origin: pickLatLng,
+      destination: recieveLatLng,
+      travelMode: 'DRIVING'
+    }, function(response, status) {
+      if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+      }
+
+    });
+  directionsDisplay.setMap(map);
+
+
+</script>
+
+</html>
